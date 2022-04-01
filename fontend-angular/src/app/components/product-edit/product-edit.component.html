@@ -1,0 +1,32 @@
+<form (ngSubmit)="submit()" #testForm="ngForm" ngNativeValidate>
+	<h4>แก้ไขสินค้า</h4>
+	<div class="form-group mb-2">
+		<label for="name">ชื่อสินค้า</label>
+		<input type="text" name="name" class="form-control" [(ngModel)]="product.name" required>
+	</div>
+	<div class="orm-group mb-2">
+		<label for="description">รายละเอียดสินค้า</label>
+		<input type="text" name="description" class="form-control" [(ngModel)]="product.description" required>
+	</div>
+	<div class="orm-group mb-2">
+		<label for="price">ราคา</label>
+		<input type="number" name="price" step="0.01" class="form-control" [(ngModel)]="product.price" value="0" min="0">
+	</div>
+	<div class="orm-group mb-2">
+		<label for="unit">หน่วยสินค้า</label>
+		<input type="text" name="unit" class="form-control" [(ngModel)]="product.unit" required>
+	</div>
+	<div class="orm-group mb-2">
+		<label for="store_id">ร้านค้า</label>
+		<select name="store_id" class="form-control" [(ngModel)]="product.store_id" required>
+			<option *ngFor="let store of stores;index as i;" [value]="store.id">{{ store.name }}</option>
+		</select>
+	</div>
+	<div class="orm-group mb-2">
+		<label for="product_category_id">หมวดหมู่</label>
+		<select name="product_category_id" class="form-control" [(ngModel)]="product.product_category_id" required>
+			<option *ngFor="let category of categories;index as i;" [value]="category.id">{{ category.name }}</option>
+		</select>
+	</div>
+	<button class="btn btn-primary" [disabled]="!testForm.form.valid">บันทึก</button>
+</form>

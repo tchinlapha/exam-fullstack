@@ -1,0 +1,88 @@
+<form (ngSubmit)="submit()" #testForm="ngForm" ngNativeValidate>
+	<h4>เพิ่มสินค้า</h4>
+	<div class="form-group mb-2">
+		<label for="name">ชื่อสินค้า</label>
+		<input type="text" name="name" class="form-control" [(ngModel)]="product.name" required>
+	</div>
+	<div class="orm-group mb-2">
+		<label for="description">รายละเอียดสินค้า</label>
+		<input type="text" name="description" class="form-control" [(ngModel)]="product.description" required>
+	</div>
+	<div class="orm-group mb-2">
+		<label for="price">ราคา</label>
+		<input type="number" name="price" step="0.01" class="form-control" [(ngModel)]="product.price" value="0" min="0">
+	</div>
+	<div class="orm-group mb-2">
+		<label for="unit">หน่วยสินค้า</label>
+		<input type="text" name="unit" class="form-control" [(ngModel)]="product.unit" required>
+	</div>
+	<div class="orm-group mb-2">
+		<label for="store_id">ร้านค้า</label>
+		<select name="store_id" class="form-control" [(ngModel)]="product.store_id" required>
+			<option *ngFor="let store of stores;index as i;" [value]="store.id">{{ store.name }}</option>
+		</select>
+	</div>
+	<div class="orm-group mb-2">
+		<label for="product_category_id">หมวดหมู่</label>
+		<select name="product_category_id" class="form-control" [(ngModel)]="product.product_category_id" required>
+			<option *ngFor="let category of categories;index as i;" [value]="category.id">{{ category.name }}</option>
+		</select>
+	</div>
+	<button class="btn btn-primary" [disabled]="!testForm.form.valid">บันทึก</button>
+</form>
+
+<div class="table-responsive mt-4">
+	<h4>สินค้าทั้งหมด</h4>
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">ชื่อสินค้า</th>
+				<th scope="col">ราคาสินค้า</th>
+				<th scope="col">ร้านค้า</th>
+				<th scope="col">หมวดหมู่</th>
+				<th scope="col">อัพเดทล่าสุด</th>
+				<th scope="col">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let product of products;index as i">
+				<th scope="row" class="align-middle">{{ i+1 }}</th>
+				<td class="align-middle">{{ product.name }}</td>
+				<td class="align-middle">{{ product.price }}</td>
+				<td class="align-middle">{{ product.store_name }}</td>
+				<td class="align-middle">{{ product.category_name }}</td>
+				<td class="align-middle">{{ product.updated_at }}</td>
+				<td class="align-middle">
+					<button class="btn btn-danger mx-1" (click)="delete(product.id)">ลบ</button>
+					<button class="btn btn-primary mx-1" (click)="viewDetail(product)" data-bs-toggle="modal" data-bs-target="#productModal">รายละเอียด</button>
+					<button class="btn btn-warning mx-1" routerLink="/product/{{product.id}}">แก้ไข</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="productModalLabel">รายละเอียดสินค้า</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p><b>ชื่อสินค้า: </b>{{ detail.name }}</p>
+        <p><b>รายละเอียดสินค้า: </b>{{ detail.description }}</p>
+        <p><b>ราคาสินค้า: </b>{{ detail.price }}</p>
+        <p><b>หน่วยสินค้า: </b>{{ detail.unit }}</p>
+         <p><b>ร้านค้า: </b>{{ detail.store_name }}</p>
+        <p><b>หมวดหมู่: </b>{{ detail.category_name }}</p>
+        <p><b>อัพเดทล่าสุด: </b>{{ detail.updated_at }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

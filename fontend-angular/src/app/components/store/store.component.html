@@ -1,0 +1,46 @@
+<form (ngSubmit)="submit()" #testForm="ngForm" ngNativeValidate>
+	<h4>เพิ่มร้านค้า</h4>
+	<div class="form-group mb-2">
+		<label for="name">ชื่อร้านค้า</label>
+		<input type="text" name="name" class="form-control" [(ngModel)]="store.name" required>
+	</div>
+	<div class="orm-group mb-2">
+		<label for="description">คำอธิบายร้านค้า</label>
+		<input type="text" name="description" class="form-control" [(ngModel)]="store.description" required>
+	</div>
+	<div class="orm-group mb-2">
+		<label for="phone">เบอร์ติดต่อร้านค้า</label>
+		<input type="tel" pattern="\d{10}" name="phone" class="form-control" [(ngModel)]="store.phone" required>
+	</div>
+	<div class="orm-group mb-2">
+		<label for="address">ที่อยู่</label>
+		<textarea name="address" class="form-control" [(ngModel)]="store.address" required></textarea>
+	</div>
+	<button class="btn btn-primary" [disabled]="!testForm.form.valid">บันทึก</button>
+</form>
+
+<div class="table-responsive mt-4">
+	<h4>ร้านค้า</h4>
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">ชื่อร้านค้า</th>
+				<th scope="col">เบอร์ติดต่อร้านค้า</th>
+				<th scope="col">อัพเดทล่าสุด</th>
+				<th scope="col">ดูสินค้า</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let store of stores;index as i">
+				<th scope="row" class="align-middle">{{ i+1 }}</th>
+				<td class="align-middle">{{ store.name }}</td>
+				<td class="align-middle">{{ store.phone }}</td>
+				<td class="align-middle">{{ store.updated_at }}</td>
+				<td class="align-middle">
+					<button class="btn btn-primary" routerLink="store/product/{{store.id}}">จัดการสินค้า</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
